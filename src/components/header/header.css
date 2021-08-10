@@ -1,0 +1,23 @@
+.header {
+  height: 80px;
+}
+
+.header-title {
+  font-size: 40px;
+  font-weight: 700x;
+  color: #fff;
+  margin: 0;
+}
+
+.header-list {
+  margin: 0;
+  color: #fff;
+  list-style-type: none;
+}
+
+.header-list li {
+  margin-right: 20px;
+  font-size: 24px;
+}
+
+
