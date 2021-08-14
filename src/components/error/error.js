@@ -3,10 +3,10 @@ import './error.css'
 
 const ErrorMessage = () => {
   return (
-    <>
-      <img src={process.env.PUBLIC_URL + '/img/error.jpg'}></img>
+    <div className="error">
+      <img src={process.env.PUBLIC_URL + '/img/warning.svg'}></img>
       <span>Something goes wrong</span>
-    </>  
+    </div>  
   )
 }
 

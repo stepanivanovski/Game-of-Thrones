@@ -13,41 +13,45 @@ export default class serviceGOT {
     return await res.json();
   }
 
-  async getAllBooks() {
+  getAllBooks = async () => {
     const res = await this.getResource(`/books/`);
 
     return res.map(book => this._transformBook(book));
   }
   
-  async getBook(id) {
+   getBook = async (id) => {
     const book = await this.getResource(`/books/${id}/`);
     return this._transformBook(book);
   }
   
-  async getAllCharacters() {
+   getAllCharacters = async () => {
     const res = await this.getResource(`/characters?page=5&pageSize=10`);
 
     return res.map(char => this._transformCharacter(char));
   }
   
-  async getCharacter(id) {
+  getCharacter = async (id) => {
     const char = await this.getResource(`/characters/${id}`);
     return this._transformCharacter(char);
   }
   
-  async getAllHouses() {
+  getAllHouses = async () => {
     const res = await this.getResource(`/houses/`);
 
     return res.map(house => this._transformHouse(house));
   }
   
-  async getHouse(id) {
-    const house = await this.getResource(`/house/${id}`);
+  getHouse = async (id) => {
+    const house = await this.getResource(`/houses/${id}`);
     return this._transformHouse(house);
   }
 
-  checkEmptyStr(value) {
+  checkEmptyStr = (value) => {
     return (value === "") ? "no data :)" : value
+  }
+
+  getId = (url) => {
+    return url.match(/\d+$/)[0]
   }
 
   _transformCharacter(char) {
@@ -57,6 +61,7 @@ export default class serviceGOT {
       born: this.checkEmptyStr(char.born),
       died: this.checkEmptyStr(char.died),
       culture: this.checkEmptyStr(char.culture),
+      id: this.getId(char.url)
     }
   }
 
@@ -67,7 +72,8 @@ export default class serviceGOT {
       words: this.checkEmptyStr(house.words),
       titles: this.checkEmptyStr(house.titles),
       overlord: this.checkEmptyStr(house.overlord),
-      ancestralWeapons: this.checkEmptyStr(house.ancestralWeapons)
+      ancestralWeapons: this.checkEmptyStr(house.ancestralWeapons),
+      id: this.getId(house.url)
     }
   }
 
@@ -76,7 +82,8 @@ export default class serviceGOT {
       name: this.checkEmptyStr(book.name),
       numberOfPages: this.checkEmptyStr(book.numberOfPages),
       publiser: this.checkEmptyStr(book.publiser),
-      released: this.checkEmptyStr(book.released) 
+      released: this.checkEmptyStr(book.released),
+      id: this.getId(book.url)
     }
   }
 }

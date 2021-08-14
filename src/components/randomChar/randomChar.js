@@ -5,29 +5,33 @@ import ErrorMessage from "../error/error";
 
 import "./randomChar.css";
 export default class RandomChar extends Component {
-  constructor(props) {
-    super(props); 
-    this.updateChar();
-  }
-  
-  gotService = new serviceGOT(); 
-
   state = {
     char: {},
     loading: true,
     error: false
   }
 
-  onError = (err) => {
+  gotService = new serviceGOT(); 
+
+  componentDidMount() {
+    this.updateChar();
+    this.timerId = setInterval(() => this.updateChar(), 5000)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerId)
+  }
+
+  onError = () => {
     this.setState({
       error: true,
       loading: false
     })
   }
 
-  updateChar() {
-    // const id = Math.floor(Math.random()*140 + 25);
-    const id = 1000;
+  updateChar = () => {
+    console.log("update");
+    const id = Math.floor(Math.random()*140 + 25);
     this.gotService.getCharacter(id)
       .then((char) => {
         this.setState({
@@ -43,7 +47,6 @@ export default class RandomChar extends Component {
 
   render() {
     const { char, loading, error } = this.state;
-
     const content = (loading) ? <Spinner/> : (error) ? <ErrorMessage/> : <View char={char}/> 
 
     return (
