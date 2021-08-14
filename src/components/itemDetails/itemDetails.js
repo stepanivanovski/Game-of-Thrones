@@ -37,6 +37,7 @@ export default class ItemDetails extends Component {
     console.log("запрос");
     getData(itemId)
       .then((item) => {
+        console.log(item);
         this.setState({item})
     })
   }

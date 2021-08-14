@@ -47,7 +47,15 @@ export default class serviceGOT {
   }
 
   checkEmptyStr = (value) => {
-    return (value === "") ? "no data :)" : value
+    if ( Array.isArray(value) ) {
+      if (value[0].length === 0) {
+        return "no data :)"
+      }
+    } else if (value.length === 0) {
+      return "no data :)"
+    } else {
+      return value
+    }
   }
 
   getId = (url) => {
@@ -66,6 +74,7 @@ export default class serviceGOT {
   }
 
   _transformHouse(house) {
+    console.log(house);
     return {
       name: this.checkEmptyStr(house.name),
       region: this.checkEmptyStr(house.region),
@@ -81,7 +90,7 @@ export default class serviceGOT {
     return {
       name: this.checkEmptyStr(book.name),
       numberOfPages: this.checkEmptyStr(book.numberOfPages),
-      publiser: this.checkEmptyStr(book.publiser),
+      publiser: this.checkEmptyStr(book.publisher),
       released: this.checkEmptyStr(book.released),
       id: this.getId(book.url)
     }
