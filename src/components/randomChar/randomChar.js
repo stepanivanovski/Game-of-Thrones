@@ -1,26 +1,42 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import serviceGOT from "../../services/serviceGOT";
 import Spinner from "../spinner/spinner";
 import ErrorMessage from "../error/error";
 
 import "./randomChar.css";
 export default class RandomChar extends Component {
+
   state = {
     char: {},
     loading: true,
     error: false
-  }
+  }  
 
   gotService = new serviceGOT(); 
 
   componentDidMount() {
     this.updateChar();
-    this.timerId = setInterval(() => this.updateChar(), 5000)
+    this.timerId = setInterval(() => this.updateChar(), this.props.interval)
   }
 
   componentWillUnmount() {
     clearInterval(this.timerId)
   }
+  
+  static defaultProps = {
+    interval: 5000
+  }
+  
+  static propTypes = {
+    interval: (props, propName, componentName) => {
+      const value = props[propName];
+      
+      if (typeof value ==='number' && !isNaN(value)) {
+        return null
+      }
+      return new TypeError(`${componentName}: ${propName} must to be a number`)
+    }
+  }   
 
   onError = () => {
     this.setState({
@@ -83,4 +99,52 @@ const View = ({char}) => {
       </ul>
     </React.Fragment>
   )
-}
+}  
+
+// const RandomChar = ({interval}) => {
+//   const [char, setChar] = useState({});
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(false);
+  
+//   const gotService = new serviceGOT(); 
+
+//   const onError = () => {
+//     setError(true);
+//     setLoading(false);
+//   }
+
+//   const updateChar = () => {
+//     console.log("update");
+//     const id = Math.floor(Math.random()*140 + 25);
+//     gotService.getCharacter(id)
+//       .then((char) => {
+//         setChar(char);
+//         setLoading(false);
+//       })
+//       .catch(error => {
+//         console.log(error);
+//         onError();
+//       })  
+//   }
+ 
+//   useEffect(() => {
+//     const timer = setInterval(() => updateChar(), interval)
+//     return () => clearInterval(timer);
+//   });
+
+//   const content = (loading) ? <Spinner/> : (error) ? <ErrorMessage/> : <View char={char}/> 
+
+//   return (
+//     <div className="random-block rounded mb-4">
+//       {content}
+//     </div>
+//   )
+// }
+// export default RandomChar;
+
+
+
+
+
+
+ 

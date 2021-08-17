@@ -25,7 +25,7 @@ class App extends React.Component {
   
   render() {
     const {randomChar} = this.state;
-    const component = (randomChar) ? <RandomChar/> : null;
+    const component = (randomChar) ? <RandomChar interval={5000}/> : null;
 
     return (
       <Router>
