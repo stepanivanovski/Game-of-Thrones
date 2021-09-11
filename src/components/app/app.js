@@ -1,4 +1,5 @@
 import React from 'react';
+import {BrowserRouter as Router, Route} from 'react-router-dom'
 
 import Header from '../header/header';
 import RandomChar from '../randomChar/randomChar';
@@ -6,7 +7,6 @@ import CharacterPage from '../pages/characterPage';
 import HousePage from '../pages/housePage';
 import BookPage from '../pages/bookPage';
 import BooksItem from '../pages/booksItemPage';
-import {BrowserRouter as Router, Route} from 'react-router-dom'
 
 import './app.css';
 
@@ -16,11 +16,11 @@ class App extends React.Component {
   }
   
   onToggleRandomChar = () => {
-     this.setState(({randomChar}) => {
-       return {
-         randomChar:!randomChar
-       }
-     })
+    this.setState(({randomChar}) => {
+      return {
+        randomChar:!randomChar
+      }
+    })
   }
   
   render() {
@@ -48,7 +48,7 @@ class App extends React.Component {
             <Route path="/books" exact={true} component={BookPage}/>
             <Route path="/houses" component={HousePage}/>
             <Route path="/books/:id" render={
-              ({match, location, history}) => {
+              ({match}) => {
                 const {id} = match.params
                 return <BooksItem id={id}/>
               }
